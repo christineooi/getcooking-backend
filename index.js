@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 var cors = require('cors');
 
+const loginlogout = require("./controllers/loginlogout");
+const register = require("./controllers/register");
+const user = require("./controllers/user");
+
 app.use(express.json());
 app.use(cors());
 
@@ -29,6 +33,12 @@ function getCategories(req, res, next) {
     }
 
 const port = process.env.PORT || 3000;
+
+app.post('/login', loginlogout.loginUser);
+app.post('/register', register.registerUser);
+app.post('/user', user.saveRecipe);
+app.post('/user', user.deleteRecipe);
+
 
 app.get('/categories', getCategories);
 
