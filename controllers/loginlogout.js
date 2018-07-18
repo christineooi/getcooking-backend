@@ -28,7 +28,7 @@ function loginUser(req, res, next) {
         email:data.rows[0].email
       }
 
-      var token = jwt.sign({ id: data.rows[0].user_id }, process.env.PASSPORT_SECRET || config.secret, {
+      var token = jwt.sign({ id: data.rows[0].user_id }, process.env.SECRET || config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });
       res.status(200).json({ auth: true, token: token ,user:user});
