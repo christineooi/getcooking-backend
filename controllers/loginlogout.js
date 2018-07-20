@@ -11,7 +11,7 @@ client.connect();
 function loginUser(req, res, next) {
     let email =req.body.email;
     let password = req.body.password;
-    console.log(email,password);
+    // console.log(email,password);
     let selectQuery = 'select * from users where email = $1';
 
     client.query(selectQuery, [email])

@@ -5,21 +5,28 @@ var cors = require('cors');
 const loginlogout = require("./controllers/loginlogout");
 const register = require("./controllers/register");
 const user = require("./controllers/user");
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
+const passport = require('passport');
+require('./controllers/passport')(passport);  
+app.use(passport.initialize());  
 
-const pg = require('pg');
-const connectionString = process.env.DATABASE_URL || 'getcookingdb';
-const client = new pg.Client(connectionString);
-client.connect();
 
-const port = process.env.PORT || 3000;
+// const pg = require('pg');
+// const connectionString = process.env.DATABASE_URL || 'getcookingdb';
+// const client = new pg.Client(connectionString);
+// client.connect();
+
+
 
 app.post('/login', loginlogout.loginUser);
+app.get('/logout', loginlogout.logoutUser);
 app.post('/register', register.registerUser);
-app.post('/user', user.saveRecipe);
-app.post('/user', user.deleteRecipe);
+
+app.post('/saverecipe', passport.authenticate('jwt', { session: false }), user.saveRecipe);
+app.delete('/removerecipe', passport.authenticate('jwt', { session: false }), user.removeRecipe);
 
 app.get('/test', (req, res) => res.send('<h1><marquee>Welcome to Get Cooking!</marquee></h1>'));
 
