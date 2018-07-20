@@ -24,16 +24,16 @@ CREATE TABLE IF NOT EXISTS cuisine (
 
 CREATE TABLE IF NOT EXISTS recipes (
 	recipe_id serial PRIMARY KEY,
-	recipe_image_url VARCHAR(255),
+	image_url VARCHAR(255),
 	recipe_category_id INTEGER REFERENCES categories(id),
 	recipe_cuisine_id INTEGER REFERENCES cuisine(id),
-	recipe_title VARCHAR(50) NOT NULL,
+	title VARCHAR(50) NOT NULL,
 	recipe_description VARCHAR(255),
 	recipe_ingredients TEXT,
 	recipe_instructions TEXT,
 	recipe_yield VARCHAR(50),
-	recipe_source_url VARCHAR(255),
-	recipe_publisher VARCHAR(50),
+	source_url VARCHAR(255),
+	publisher VARCHAR(50),
 	user_id  INTEGER REFERENCES users(user_id),
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
