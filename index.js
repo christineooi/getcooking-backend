@@ -13,19 +13,12 @@ const passport = require('passport');
 require('./controllers/passport')(passport);  
 app.use(passport.initialize());  
 
-
-// const pg = require('pg');
-// const connectionString = process.env.DATABASE_URL || 'getcookingdb';
-// const client = new pg.Client(connectionString);
-// client.connect();
-
-
-
 app.post('/login', loginlogout.loginUser);
 app.get('/logout', loginlogout.logoutUser);
 app.post('/register', register.registerUser);
 
 app.post('/saverecipe', passport.authenticate('jwt', { session: false }), user.saveRecipe);
+app.post('/getuserrecipes', passport.authenticate('jwt', { session: false }), user.getUserRecipes);
 app.delete('/removerecipe', passport.authenticate('jwt', { session: false }), user.removeRecipe);
 
 app.get('/test', (req, res) => res.send('<h1><marquee>Welcome to Get Cooking!</marquee></h1>'));

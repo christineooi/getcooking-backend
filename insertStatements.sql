@@ -1,4 +1,3 @@
-
 INSERT INTO categories (label) 
 VALUES ('Breakfast'),
        ('Lunch'),
@@ -8,7 +7,6 @@ VALUES ('Breakfast'),
        ('Salads'),
        ('Main Dishes'),
        ('Desserts');
-
 
 INSERT INTO cuisine (label) 
 VALUES ('American'),

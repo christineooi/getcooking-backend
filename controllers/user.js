@@ -21,10 +21,28 @@ function saveRecipe(req, res, next) {
           });
       })
       .catch(function (err) {
-        return next(err);
+        return (err);
       });
 
 }
+
+function getUserRecipes(req, res, next) {
+    let userid =req.body.userid;
+    console.log("In getUserRecipes - userid: ",userid);
+    let selectQuery = 'select * from recipes where user_id = $1';
+
+    client.query(selectQuery, [userid])
+    .then(function (data) {
+      console.log(data);
+      if (!data.rows) return res.status(404).json('No user recipes found.');
+      res.send(data);
+    })
+    .catch(function (err) {
+        return (err);
+    });
+
+}
+
 
 function removeRecipe(req, res, next) {
     console.log("In user.removeRecipe");
@@ -32,5 +50,6 @@ function removeRecipe(req, res, next) {
 
 module.exports = {
     saveRecipe: saveRecipe,
+    getUserRecipes: getUserRecipes,
     removeRecipe: removeRecipe
 };
