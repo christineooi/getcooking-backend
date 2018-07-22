@@ -19,9 +19,9 @@ app.post('/register', register.registerUser);
 
 app.post('/saverecipe', passport.authenticate('jwt', { session: false }), user.saveRecipe);
 app.post('/getuserrecipes', passport.authenticate('jwt', { session: false }), user.getUserRecipes);
-app.delete('/removerecipe', passport.authenticate('jwt', { session: false }), user.removeRecipe);
+app.delete('/removerecipe/:recipeId', passport.authenticate('jwt', { session: false }), user.removeRecipe);
 
-app.get('/test', (req, res) => res.send('<h1><marquee>Welcome to Get Cooking!</marquee></h1>'));
+// app.get('/test', (req, res) => res.send('<h1><marquee>Welcome to Get Cooking!</marquee></h1>'));
 
 app.listen(port, function() {
     console.log("Listening on " + port);

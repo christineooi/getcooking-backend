@@ -11,15 +11,14 @@ client.connect();
 function loginUser(req, res, next) {
     let email =req.body.email;
     let password = req.body.password;
-    // console.log(email,password);
     let selectQuery = 'select * from users where email = $1';
 
     client.query(selectQuery, [email])
     .then(function (data) {
-      console.log(data.rows);
+      // console.log(data.rows);
       if (!data.rows) return res.status(404).json('No user found.');
       var passwordIsValid = bcrypt.compareSync(req.body.password, data.rows[0].password);
-      console.log(passwordIsValid)
+      // console.log(passwordIsValid)
       if (!passwordIsValid) return res.status(401).json({ auth: false, token: null });
       const user ={
         userid: data.rows[0].user_id,

@@ -5,8 +5,6 @@ const client = new pg.Client(connectionString);
 client.connect();
 
 function saveRecipe(req, res, next) {
-    console.log("In user.saveRecipe");
-    console.log("req.body",req.body);
     const queryObj = {
     text: "insert into recipes(image_url, title, source_url, publisher, user_id) VALUES ($1, $2, $3, $4, $5)", 
     values: [req.body.image, req.body.title, req.body.source, req.body.publisher, req.body.userid]
@@ -28,7 +26,6 @@ function saveRecipe(req, res, next) {
 
 function getUserRecipes(req, res, next) {
     let userid =req.body.userid;
-    console.log("In getUserRecipes - userid: ",userid);
     let selectQuery = 'select * from recipes where user_id = $1';
 
     client.query(selectQuery, [userid])
@@ -45,7 +42,23 @@ function getUserRecipes(req, res, next) {
 
 
 function removeRecipe(req, res, next) {
-    console.log("In user.removeRecipe");
+    
+    var recipeId = parseInt(req.params.recipeId);
+    client.query('delete from recipes where recipe_id = $1', [recipeId])
+    .then(function (result) {
+    
+    res.status(200)
+        .json({
+        status: 'success',
+        message: `Deleted ${result.rowCount} recipe`
+        });
+    
+    })
+    .catch(function (err) {
+    return next(err);
+    });
+      
+    
 }
 
 module.exports = {
